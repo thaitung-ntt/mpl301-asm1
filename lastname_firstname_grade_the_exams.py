@@ -14,6 +14,8 @@ class ScoreStudent:
         self.validNum = 0
         self.invalidNum = 0
         self.questionList = list(map(str, range(1, self.numOfQuestion + 1)))
+        self.answer_key = ['B', 'A', 'D', 'D', 'C', 'B', 'D', 'A', 'C', 'C', 'D',
+                           'B', 'A', 'B', 'A', 'C', 'B', 'D', 'A', 'C', 'A', 'A', 'B', 'D', 'D']
 
     def inputData(self):
         # Nhap du lieu ID va cau tra loi tu file txt
@@ -78,14 +80,43 @@ class ScoreStudent:
             # Tao dataframe gom ID va cau tra loi cua cac hoc sinh dung dinh dang
             self.df = pd.DataFrame(validLine, columns=columns)
 
+    def _check_answer_1_student(self, studentAnswer):
+        # Cham diem 1 hoc sinh
+        score = 0
+        for index in range(self.numOfQuestion):
+            if not studentAnswer[index]:
+                continue
+            elif studentAnswer[index] == self.answer_key[index]:
+                score += 4
+            elif studentAnswer[index] != self.answer_key[index]:
+                score -= 1
+        return score
+
+    def _scoring_students(self):
+        # Cham diem tat ca hoc sinh cua class
+        if self.df is None:
+            return
+        # Them cot Score vao self.df, la diem cua hoc sinh sau khi cham
+        self.df['Score'] = self.df.loc[:, self.questionList].apply(
+            self._check_answer_1_student, axis=1)
+
     def report(self):
         # In report
         if self.validNum == 0:
             return
+        self._scoring_students()
 
         print('\n**** REPORT ****\n')
+        # Report so valid lines va invalid lines
         print(f'Total valid lines of data: {self.validNum}')
         print(f'Total invalid lines of data: {self.invalidNum}\n')
+        # Report cac tinh toan ve diem cua hoc sinh:
+        print(f"Mean (average) score: {round(self.df['Score'].mean(), 2)}")
+        print(f"Highest score: {round(self.df['Score'].max(), 2)}")
+        print(f"Lowest score: {round(self.df['Score'].min(), 2)}")
+        print(
+            f"Range of scores: {round(self.df['Score'].max() - self.df['Score'].min(), 2)}")
+        print(f"Median score: {round(self.df['Score'].median(), 2)}")
 
 
 score = ScoreStudent()
