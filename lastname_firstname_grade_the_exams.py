@@ -119,6 +119,7 @@ class ScoreStudent:
         print(f"Median score: {round(self.df['Score'].median(), 2)}")
 
     def save_score(self):
+        # Save score of student to a txt file
         if self.validNum == 0:
             return
         with open(self.path + '_grades.txt', 'w') as file:
