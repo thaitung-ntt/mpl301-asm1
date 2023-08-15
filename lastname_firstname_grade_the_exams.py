@@ -118,8 +118,17 @@ class ScoreStudent:
             f"Range of scores: {round(self.df['Score'].max() - self.df['Score'].min(), 2)}")
         print(f"Median score: {round(self.df['Score'].median(), 2)}")
 
+    def save_score(self):
+        if self.validNum == 0:
+            return
+        with open(self.path + '_grades.txt', 'w') as file:
+            self.df.apply(lambda line: file.write(
+                f'{line.ID},{line.Score}\n'), axis=1)
 
-score = ScoreStudent()
-score.inputData()
-score.analyseData()
-score.report()
+
+if __name__ == '__main__':
+    score = ScoreStudent()
+    score.inputData()
+    score.analyseData()
+    score.report()
+    score.save_score()
