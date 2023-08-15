@@ -22,11 +22,13 @@ Sau đó nhập tên file chứa điểm của học sinh. Ví dụ với file *
 * Mỗi hàng chứa mã ID của học sinh, theo sau là câu trả lời của 25 câu hỏi, cách nhau bởi dấu phẩy. 
 * ID: Ký tự N, theo sau là 8 ký tự số.
 * Câu học sinh không trả lời thì để trống.
+
 Ví dụ: N12345678,B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D
 
 ## Định dạng của file xuất ra:
 * File có định dạng txt.
 * Mỗi hàng chứa ID và điểm của học sinh.
+
 Ví dụ: N00000001,59
 
 ## Github
